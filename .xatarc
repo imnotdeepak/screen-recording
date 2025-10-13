@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://Deepak-Kolli-s-workspace-pgl4h9.us-east-1.xata.sh/db/snapcast",
+  "codegen": {
+    "output": "src/xata.ts"
+  }
+}
