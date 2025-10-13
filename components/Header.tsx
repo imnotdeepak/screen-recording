@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { ICONS } from "../constants";
-import DropdownList from "./DropDownList";
+import DropDownList from "./DropDownList";
 
 const Header = ({ subHeader, title, userImg }: SharedHeaderProps) => {
   return (
@@ -57,7 +57,7 @@ const Header = ({ subHeader, title, userImg }: SharedHeaderProps) => {
             height={16}
           />
         </div>
-        <DropdownList />
+        <DropDownList />
       </section>
     </header>
   );
