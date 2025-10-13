@@ -78,7 +78,7 @@ declare interface VideoCardProps {
   createdAt: Date;
   views: number;
   visibility: Visibility;
-  duration: number | null;
+  duration: number;
 }
 
 declare interface VideoDetailHeaderProps {
