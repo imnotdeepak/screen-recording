@@ -27,11 +27,12 @@
   --shadow-10: 0px 6px 24px 0px rgba(0, 0, 0, 0.1);
   --shadow-15: 0px 8px 24px 0px rgba(0, 0, 0, 0.15);
   --shadow-20: 0px 10px 30px 0px rgba(0, 0, 0, 0.2);
-  --shadow-inset-20: 0px 10px 40px 0px rgba(0, 0, 0, 0.2),
-    0px 0px 0px 1px #d7d5dd inset;
+  --shadow-inset-20:
+    0px 10px 40px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 1px #d7d5dd inset;
   --radius-20: 20px;
   --radius-18: 18px;
-  --background-image-radial-100: radial-gradient(
+  --background-image-radial-100:
+    radial-gradient(
       79.36% 59.94% at 101.94% -1.83%,
       #ffe5f0 0%,
       #fff 42%,
@@ -215,7 +216,7 @@
 
   /* dropdown */
   .dropdown {
-    @apply absolute bg-white shadow-lg rounded-lg flex flex-col gap-2 w-full z-10 top-12 p-2;
+    @apply absolute bg-white shadow-lg rounded-lg flex flex-col gap-2 w-full z-10 top-12;
 
     .list-item {
       @apply px-3 py-2.5 text-sm font-medium -tracking-[0.8px] relative text-dark-100 cursor-pointer hover:bg-pink-100 hover:text-white transition-colors duration-200 ease-in-out rounded-md;
