@@ -18,6 +18,8 @@ export const filterOptions = [
   "Least Viewed",
 ];
 
+export type Visibility = "public" | "private";
+
 export const visibilities: Visibility[] = ["public", "private"];
 
 export const ICONS = {
@@ -47,7 +49,17 @@ export const DEFAULT_RECORDING_CONFIG = {
   videoBitsPerSecond: 2500000,
 };
 
-export const dummyCards = [
+export const dummyCards: Array<{
+  id: string;
+  title: string;
+  thumbnail: string;
+  createdAt: Date;
+  userImg: string;
+  username: string;
+  views: number;
+  visibility: Visibility;
+  duration: number;
+}> = [
   {
     id: "1",
     title: "SnapChat Message",
