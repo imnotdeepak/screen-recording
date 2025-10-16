@@ -25,7 +25,7 @@ const Navbar = () => {
     <header className="navbar">
       <nav>
         <Link href="/">
-          <h1>SnapCast</h1>
+          <h1>RecorderFlix</h1>
         </Link>
 
         <figure>
