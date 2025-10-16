@@ -16,7 +16,6 @@ const Page = async ({ searchParams }: SearchParams) => {
       {videos?.length > 0 ? (
         <section className="video-grid">
           {videos.map(({ video, user }) => {
-            console.log("Video data:", video);
             return (
               <VideoCard
                 key={video.id}

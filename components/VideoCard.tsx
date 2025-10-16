@@ -16,7 +16,6 @@ const VideoCard = ({
   duration,
   videoId,
 }: VideoCardProps) => {
-  console.log("VideoCard props:", { id, videoId, title });
   return (
     <Link href={`/video/${videoId}`} className="video-card">
       <Image

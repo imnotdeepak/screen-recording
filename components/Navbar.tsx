@@ -30,13 +30,21 @@ const Navbar = () => {
 
         <figure>
           <button onClick={() => router.push(`/profile/${user?.id}`)}>
-            <Image
-              src={user?.image ?? ""}
-              alt="User"
-              width={36}
-              height={36}
-              className="rounded-full aspect-square"
-            />
+            {user?.image ? (
+              <Image
+                src={user.image}
+                alt="User"
+                width={36}
+                height={36}
+                className="rounded-full aspect-square"
+              />
+            ) : (
+              <div className="w-9 h-9 rounded-full bg-gray-300 flex items-center justify-center">
+                <span className="text-gray-600 font-medium text-sm">
+                  {user?.name?.[0] ?? "U"}
+                </span>
+              </div>
+            )}
           </button>
           <button className="cursor-pointer" onClick={handleLogout}>
             <Image

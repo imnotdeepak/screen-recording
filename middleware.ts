@@ -1,20 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import { headers } from "next/headers";
-import { auth } from "@/lib/auth";
 import aj, { createMiddleware, detectBot, shield } from "./lib/arcjet";
 
 export async function middleware(request: NextRequest) {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
   // Allow public access to video pages and the main page
   const isPublicRoute =
     request.nextUrl.pathname === "/" ||
     request.nextUrl.pathname.startsWith("/video/");
 
-  if (!session && !isPublicRoute) {
-    return NextResponse.redirect(new URL("/sign-in", request.url));
+  // For now, we'll handle auth in the individual pages/components
+  // This avoids the Edge Runtime compatibility issue with better-auth
+  if (!isPublicRoute) {
+    // Check for auth cookie instead of using better-auth directly
+    const authCookie = request.cookies.get("better-auth.session_token");
+    if (!authCookie) {
+      return NextResponse.redirect(new URL("/sign-in", request.url));
+    }
   }
 
   return NextResponse.next();

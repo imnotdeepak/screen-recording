@@ -8,13 +8,9 @@ import VideoDetailHeader from "@/components/VideoDetailHeader";
 const page = async ({ params }: Params) => {
   const { videoId } = await params;
 
-  console.log("Looking for video with ID:", videoId);
-
   const videoRecord = await getVideoById(videoId);
-  console.log("getVideoById result:", videoRecord);
 
   if (!videoRecord) {
-    console.log("No video found, redirecting to 404");
     redirect("/404");
   }
 
