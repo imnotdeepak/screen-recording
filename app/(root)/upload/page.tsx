@@ -3,11 +3,7 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import FormField from "../../../components/FormField";
 import FileInput from "../../../components/FileInput";
-import {
-  MAX_THUMBNAIL_SIZE,
-  MAX_VIDEO_SIZE,
-  visibilities,
-} from "../../../constants";
+import { MAX_THUMBNAIL_SIZE, MAX_VIDEO_SIZE } from "../../../constants";
 import { useFileInput } from "../../../lib/hooks/useFileInput";
 import {
   getThumbnailUploadUrl,
@@ -144,7 +140,7 @@ const Page = () => {
       });
       router.push(`/`);
     } catch (error) {
-      console.log(error);
+      console.error("Upload failed:", error);
     } finally {
       setIsSubmitting(false);
     }
