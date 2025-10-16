@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 import VideoPlayer from "@/components/VideoPlayer";
+import VideoViewTracker from "@/components/VideoViewTracker";
 import { getVideoById } from "@/lib/actions/video";
 import VideoDetailHeader from "@/components/VideoDetailHeader";
 
@@ -29,7 +30,9 @@ const page = async ({ params }: Params) => {
       />
       <section className="video-details">
         <div className="content">
-          <VideoPlayer videoId={video.videoId} />
+          <VideoViewTracker videoId={video.videoId}>
+            <VideoPlayer videoId={video.videoId} />
+          </VideoViewTracker>
         </div>
       </section>
     </main>

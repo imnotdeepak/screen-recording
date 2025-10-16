@@ -14,7 +14,7 @@ import { db } from "@/drizzle/db";
 import { user, videos } from "@/drizzle/schema";
 import { revalidatePath } from "next/cache";
 import aj, { fixedWindow, request } from "../arcjet";
-import { and, eq, or, sql } from "drizzle-orm";
+import { and, desc, eq, ilike, or, sql, SQL } from "drizzle-orm";
 
 // Constants with full names
 const VIDEO_STREAM_BASE_URL = BUNNY.STREAM_BASE_URL;
@@ -119,6 +119,7 @@ export const saveVideoDetails = withErrorHandling(
     const now = new Date();
     await db.insert(videos).values({
       ...videoDetails,
+      visibility: videoDetails.visibility as "public" | "private",
       videoUrl: `${BUNNY.EMBED_URL}/${BUNNY_LIBRARY_ID}/${videoDetails.videoId}`,
       userId,
       createdAt: now,
@@ -184,3 +185,50 @@ export const getVideoById = withErrorHandling(async (videoId: string) => {
   );
   return videoRecord;
 });
+
+export const getAllVideosByUser = withErrorHandling(
+  async (
+    userIdParameter: string,
+    searchQuery: string = "",
+    sortFilter?: string
+  ) => {
+    const currentUserId = (
+      await auth.api.getSession({ headers: await headers() })
+    )?.user.id;
+    const isOwner = userIdParameter === currentUserId;
+
+    const [userInfo] = await db
+      .select({
+        id: user.id,
+        name: user.name,
+        image: user.image,
+        email: user.email,
+      })
+      .from(user)
+      .where(eq(user.id, userIdParameter));
+    if (!userInfo) throw new Error("User not found");
+
+    const conditions = [
+      eq(videos.userId, userIdParameter),
+      !isOwner && eq(videos.visibility, "public"),
+      searchQuery.trim() && ilike(videos.title, `%${searchQuery}%`),
+    ].filter(Boolean) as SQL[];
+
+    const userVideos = await buildVideoWithUserQuery()
+      .where(and(...conditions))
+      .orderBy(
+        sortFilter ? getOrderByClause(sortFilter) : desc(videos.createdAt)
+      );
+
+    return { user: userInfo, videos: userVideos, count: userVideos.length };
+  }
+);
+
+export const incrementVideoViews = withErrorHandling(
+  async (videoId: string) => {
+    await db
+      .update(videos)
+      .set({ views: sql`${videos.views} + 1` })
+      .where(eq(videos.videoId, videoId));
+  }
+);
