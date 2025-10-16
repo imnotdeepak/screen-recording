@@ -14,9 +14,11 @@ const VideoCard = ({
   views,
   visibility,
   duration,
+  videoId,
 }: VideoCardProps) => {
+  console.log("VideoCard props:", { id, videoId, title });
   return (
-    <Link href={`/video/${id}`} className="video-card">
+    <Link href={`/video/${videoId}`} className="video-card">
       <Image
         src={thumbnail}
         alt="thumbnail"

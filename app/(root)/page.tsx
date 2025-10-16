@@ -15,16 +15,20 @@ const Page = async ({ searchParams }: SearchParams) => {
 
       {videos?.length > 0 ? (
         <section className="video-grid">
-          {videos.map(({ video, user }) => (
-            <VideoCard
-              key={video.id}
-              {...video}
-              userImg={user?.image || ""}
-              username={user?.name || "Guest"}
-              thumbnail={video.thumbnailUrl}
-              duration={video.duration || 0}
-            />
-          ))}
+          {videos.map(({ video, user }) => {
+            console.log("Video data:", video);
+            return (
+              <VideoCard
+                key={video.id}
+                {...video}
+                userImg={user?.image || ""}
+                username={user?.name || "Guest"}
+                thumbnail={video.thumbnailUrl}
+                duration={video.duration || 0}
+                videoId={video.videoId}
+              />
+            );
+          })}
         </section>
       ) : (
         <EmptyState
