@@ -1,9 +1,32 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useState, useEffect } from "react";
 
 const DropDownList = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
+
+  // Get current filter from URL or default to "Most Recent"
+  const currentFilter = searchParams.get("filter") || "Most Recent";
+  const [selectedOption, setSelectedOption] = useState(currentFilter);
+
+  // Sync selected option with URL changes
+  useEffect(() => {
+    setSelectedOption(currentFilter);
+  }, [currentFilter]);
+
+  const handleOptionClick = (option: string) => {
+    setSelectedOption(option);
+    setIsOpen(false);
+
+    // Create new URL with the selected filter
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("filter", option);
+    router.push(`/?${params.toString()}`);
+  };
+
   return (
     <div className="relative">
       <div
@@ -17,7 +40,7 @@ const DropDownList = () => {
             width={14}
             height={14}
           />
-          <span>Most Recent</span>
+          <span>{selectedOption}</span>
         </figure>
         <Image
           src="/assets/icons/arrow-down.svg"
@@ -28,8 +51,12 @@ const DropDownList = () => {
       </div>
       {isOpen && (
         <ul className="dropdown">
-          {["Most recent", "Most liked"].map((option) => (
-            <li key={option} className="list-item">
+          {["Most Recent", "Most Viewed"].map((option) => (
+            <li
+              key={option}
+              className="list-item"
+              onClick={() => handleOptionClick(option)}
+            >
               {option}
             </li>
           ))}

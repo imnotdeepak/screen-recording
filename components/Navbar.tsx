@@ -25,12 +25,6 @@ const Navbar = () => {
     <header className="navbar">
       <nav>
         <Link href="/">
-          <Image
-            src="/assets/icons/logo.svg"
-            alt="logo"
-            width={32}
-            height={32}
-          />
           <h1>SnapCast</h1>
         </Link>
 

@@ -223,3 +223,12 @@ export const getAllVideosByUser = withErrorHandling(
     return { user: userInfo, videos: userVideos, count: userVideos.length };
   }
 );
+
+export const incrementVideoViews = withErrorHandling(
+  async (videoId: string) => {
+    await db
+      .update(videos)
+      .set({ views: sql`${videos.views} + 1` })
+      .where(eq(videos.videoId, videoId));
+  }
+);

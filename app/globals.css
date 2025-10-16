@@ -413,10 +413,6 @@
 
           .record-upload {
             @apply py-2.5 px-6 bg-pink-100 text-white rounded-4xl font-medium flex items-center gap-2;
-
-            img {
-              @apply brightness-0 invert;
-            }
           }
         }
       }
