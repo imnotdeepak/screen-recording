@@ -8,7 +8,12 @@ export async function middleware(request: NextRequest) {
     headers: await headers(),
   });
 
-  if (!session) {
+  // Allow public access to video pages and the main page
+  const isPublicRoute =
+    request.nextUrl.pathname === "/" ||
+    request.nextUrl.pathname.startsWith("/video/");
+
+  if (!session && !isPublicRoute) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
