@@ -7,16 +7,14 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname === "/" ||
     request.nextUrl.pathname.startsWith("/video/");
 
-  // For now, we'll handle auth in the individual pages/components
-  // This avoids the Edge Runtime compatibility issue with better-auth
-  if (!isPublicRoute) {
-    // Check for auth cookie instead of using better-auth directly
-    const authCookie = request.cookies.get("better-auth.session_token");
-    if (!authCookie) {
-      return NextResponse.redirect(new URL("/sign-in", request.url));
-    }
+  // Skip auth check for public routes
+  if (isPublicRoute) {
+    return NextResponse.next();
   }
 
+  // For protected routes, we'll rely on the auth check in the individual pages
+  // This avoids the Edge Runtime compatibility issue with better-auth
+  // The pages will handle their own auth and redirect if needed
   return NextResponse.next();
 }
 const validate = aj
