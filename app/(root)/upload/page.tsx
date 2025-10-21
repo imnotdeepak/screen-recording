@@ -11,6 +11,7 @@ import {
   saveVideoDetails,
 } from "@/lib/actions/video";
 import { useRouter } from "next/navigation";
+import { authClient } from "../../../lib/auth-client";
 
 const uploadFileToBunny = (
   file: File,
@@ -31,6 +32,7 @@ const uploadFileToBunny = (
 
 const Page = () => {
   const router = useRouter();
+  const { data: session } = authClient.useSession();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);
   const [error, setError] = useState("");
@@ -42,6 +44,29 @@ const Page = () => {
 
   const video = useFileInput(MAX_VIDEO_SIZE);
   const thumbnail = useFileInput(MAX_THUMBNAIL_SIZE);
+
+  // Check authentication
+  useEffect(() => {
+    if (session === null) {
+      router.push("/sign-in");
+    }
+  }, [session, router]);
+
+  // Show loading while checking authentication
+  if (session === undefined) {
+    return (
+      <div className="wrapper-d upload-page">
+        <div className="flex items-center justify-center h-64">
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't render the form if not authenticated
+  if (!session) {
+    return null;
+  }
 
   useEffect(() => {
     if (video.duration !== null) {
